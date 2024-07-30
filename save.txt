@@ -1,0 +1,119 @@
+ #include <ros.h>
+ #include <std_msgs/String.h>
+
+ ros::NodeHandle nh;
+
+ std_msgs::String str_msg;
+ ros::Publisher chatter("chatter", &str_msg);
+
+ void setup() {
+   Serial1.begin(115200);
+  
+   nh.initNode();
+  
+   nh.advertise(chatter);
+ }
+
+void loop() {
+  str_msg.data = "Hello, ROS!";
+  chatter.publish(&str_msg);
+
+  nh.spinOnce();
+  delay(100);
+
+ }
+
+// #include <Arduino.h>
+
+// void setup() {
+//   Serial.begin(115200);
+//   pinMode(PC13, OUTPUT);
+  
+  
+// }
+
+// void loop() {
+//   Serial.println("DFU is Working!");
+//   digitalWrite( PC13 , HIGH);
+//   delay(1000);
+//   digitalWrite( PC13 , LOW);
+//   delay(1000);
+
+
+// }\
+
+
+#include <ros.h>
+ #include <std_msgs/String.h>
+
+ HardwareSerial Serial1(PA3, PA2);
+
+ ros::NodeHandle nh;
+
+ std_msgs::String str_msg;
+ ros::Publisher chatter("chatter", &str_msg);
+
+ void setup() {
+   Serial1.begin(57600);
+  
+   nh.initNode();
+  
+   nh.advertise(chatter);
+ }
+
+void loop() {
+  str_msg.data = "Hello, ROS!";
+  chatter.publish(&str_msg);
+
+  nh.spinOnce();
+  delay(1000);
+
+
+ }
+
+// #include <Arduino.h>
+
+// void setup() {
+//   Serial.begin(115200);
+//   pinMode(PC13, OUTPUT);
+  
+  
+// }
+
+// void loop() {
+//   Serial.println("DFU is Working!");
+//   digitalWrite( PC13 , HIGH);
+//   delay(1000);
+//   digitalWrite( PC13 , LOW);
+//   delay(1000);
+
+
+// }
+
+#include <ros.h>
+#include <std_msgs/Empty.h>
+ #include <Servo.h> 
+
+ HardwareSerial Serial1(PA3, PA2);
+
+ ros::NodeHandle nh;
+
+ void toggle_led( const std_msgs::Empty& toggle_msg){
+    digitalWrite(PC13, HIGH-digitalRead(PC13));
+
+ }
+
+ ros::Subscriber<std_msgs::Empty> 
+ sub("toggle_led", &toggle_led);
+
+ void setup() {
+    pinMode(PC13, OUTPUT);  
+    nh.initNode();
+    nh.subscribe(sub);
+ }
+
+ void loop(){
+    nh.spinOnce();
+    delay(1);
+ }
+ 
