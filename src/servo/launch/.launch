@@ -1,0 +1,5 @@
+<launch>
+    <param name="servo_angles" type="yaml" value="[0, 0]"/>
+    
+    <node pkg="servo" type="robotic_arm.py" name="servo_angle_publisher" output="screen"/>
+</launch>
